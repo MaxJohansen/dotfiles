@@ -1,3 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = git@github.com:anishathalye/dotbot.git
+[submodule "lambda-mod-zsh-theme"]
+	path = lambda-mod-zsh-theme
+	url = git@github.com:halfo/lambda-mod-zsh-theme.git
