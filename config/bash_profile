@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# I do not use bash directly
+# This is just decorational
+
+PATH="/usr/local/bin:$PATH"

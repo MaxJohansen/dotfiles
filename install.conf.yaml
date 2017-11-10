@@ -1,0 +1,20 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~']
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+
+- link:
+    ~/.shell: shell
+    ~/.shell_env: config/shell_env
+    ~/.zshrc: config/zshrc
+    ~/.bashrc: config/bashrc
+    ~/.bash_profile: config/bash_profile
+    ~/.gitconfig: config/gitconfig
+    ~/.gitignore: config/gitignore
+    ~/.gdbinit: config/gdbinit
+    ~/.editorconfig: config/editorconfig

@@ -1,0 +1,19 @@
+# Path to your oh-my-zsh installation.
+
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="lambda-mod"
+
+CASE_SENSITIVE="false"
+
+HYPHEN_INSENSITIVE="false"
+
+HIST_STAMPS="dd.mm.yyyy"
+HIST_IGNORE_SPACE="true"
+
+plugins=(git sudo python rails ruby extract zsh-syntax-highlighting)
+
+export PATH=$HOME/.local/bin:$PATH:$HOME/go/bin:$HOME/bin:$PATH
+
+source $ZSH/oh-my-zsh.sh
+source ~/.shell_env
