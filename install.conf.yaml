@@ -18,3 +18,4 @@
     ~/.gitignore: config/gitignore
     ~/.gdbinit: config/gdbinit
     ~/.editorconfig: config/editorconfig
+    ~/.oh-my-zsh/custom/themes/lambda-mod.zsh-theme: lambda-mod-zsh-theme/lambda-mod.zsh-theme
