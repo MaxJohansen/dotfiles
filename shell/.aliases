@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-alias git=hub
+#alias git=hub
 alias la='exa -abghl --git'
 alias c='pygmentize -O style=monokai -f console256 -g'
 alias clip="xclip -selection clipboard"
