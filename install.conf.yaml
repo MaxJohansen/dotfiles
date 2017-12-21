@@ -1,16 +1,14 @@
 - defaults:
     link:
-      create: true
-      relink: true
+        create: true
+        relink: true
 
 - clean: ['~']
-
-- shell:
-    - [git submodule update --init --recursive, Installing submodules]
 
 - link:
     ~/.shell: shell
     ~/.shell_env: config/shell_env
+    ~/.oh-my-zsh/: oh-my-zsh
     ~/.zshrc: config/zshrc
     ~/.bashrc: config/bashrc
     ~/.bash_profile: config/bash_profile
@@ -19,3 +17,6 @@
     ~/.gdbinit: config/gdbinit
     ~/.editorconfig: config/editorconfig
     ~/.oh-my-zsh/custom/themes/lambda-mod.zsh-theme: lambda-mod-zsh-theme/lambda-mod.zsh-theme
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
