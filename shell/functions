@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
 github-create() {
-    local repo_name=$1
     local invalid_credentials=""
-    local unable_to_connect=0
+    local private="false"
     local dir_name=`basename $(pwd)`
+
+    for var in "$@"
+    do
+        if [ "$var" = "private" ]; then
+            private="true"
+        else
+            repo_name="$var"
+        fi
+    done
 
     if [ ! -d ".git" ]; then
         echo "This is not a git repository, you should create one with 'git init'"
@@ -37,14 +45,14 @@ github-create() {
     fi
 
     echo -n "Creating Github repository '$repo_name' ... "
-    httpcode=`curl --silent --write-out %{http_code} -u $username:$token -d '{"'name'":"'$repo_name'"}' https://api.github.com/user/repos | tail -n 1`
+    httpcode=`curl --silent --write-out %{http_code} -u $username:$token -d '{"'name'":"'$repo_name'", "'private'": '$private'}' https://api.github.com/user/repos`
     case $httpcode in
     401)
         echo "bad credentials: check username and token."
         return 1
         ;;
     422)
-        echo "repository already exists: '$repo_name'"
+        echo "repository already exists at https://github.com/$username/$repo_name"
         return 1
         ;;
     201)
