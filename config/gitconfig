@@ -1,16 +1,16 @@
-[alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-	ignore = status -s | grep -e ^?? | cut -c 4- >> .gitignore
 [user]
-	email = johansen.max@gmail.com
 	name = Mads Johansen
+	email = johansen.max@gmail.com
 [core]
 	editor = nano
 	excludesfile = ~/.gitignore
+[include]
+	path = ~/.gitconfig_local
 [gc]
 	autoDetach = false
 [push]
 	default = simple
-[include]
-	path = ~/.gitconfig_local
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	ignore = status -s | grep -e ^?? | cut -c 4- >> .gitignore
 
