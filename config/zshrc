@@ -13,7 +13,8 @@ HIST_IGNORE_SPACE="true"
 
 plugins=(git sudo python rails ruby extract zsh-syntax-highlighting)
 
-export PATH=$HOME/.npm-global/bin:$HOME/go/bin:$HOME/bin:$PATH
+export PATH=$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.rvm/bin:$HOME/bin:$PATH
 
 source $ZSH/oh-my-zsh.sh
 source ~/.shell_env
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
