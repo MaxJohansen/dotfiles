@@ -45,8 +45,10 @@ github-create() {
     fi
 
     echo -n "Creating Github repository '$repo_name' ... "
-    httpcode=`curl --silent --write-out %{http_code} -u $username:$token -d '{"'name'":"'$repo_name'", "'private'": '$private'}' https://api.github.com/user/repos`
+    httpcode=`curl --silent --output /dev/null --write-out %{http_code} -u $username:$token -d '{"name":"'$repo_name'", "private": '$private'}' https://api.github.com/user/repos`
     case $httpcode in
+    201)
+        ;;
     401)
         echo "bad credentials: check username and token."
         return 1
@@ -54,8 +56,6 @@ github-create() {
     422)
         echo "repository already exists at https://github.com/$username/$repo_name"
         return 1
-        ;;
-    201)
         ;;
     *)
         echo "unknown return code: $httpcode"
