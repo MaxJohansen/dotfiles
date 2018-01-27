@@ -47,19 +47,19 @@ github-create() {
     echo -n "Creating Github repository '$repo_name' ... "
     httpcode=`curl --silent --output /dev/null --write-out %{http_code} -u $username:$token -d '{"name":"'$repo_name'", "private": '$private'}' https://api.github.com/user/repos`
     case $httpcode in
-    201)
+        201)
         ;;
-    401)
-        echo "bad credentials: check username and token."
-        return 1
+        401)
+            echo "bad credentials: check username and token."
+            return 1
         ;;
-    422)
-        echo "repository already exists at https://github.com/$username/$repo_name"
-        return 1
+        422)
+            echo "repository already exists at https://github.com/$username/$repo_name"
+            return 1
         ;;
-    *)
-        echo "unknown return code: $httpcode"
-        return 1
+        *)
+            echo "unknown return code: $httpcode"
+            return 1
         ;;
     esac
     echo "done."
@@ -85,4 +85,12 @@ transfer() {
     fi;
     cat $tmpfile;
     rm -f $tmpfile;
+}
+
+c() {
+    if [[ -x $(which pygmentize) ]]; then
+        pygmentize -O style=monokai -f console256 -g $* | less -FXR
+    else
+        less -FXRS $*
+    fi
 }
