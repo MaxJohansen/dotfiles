@@ -4,6 +4,7 @@ github-create() {
     local invalid_credentials=""
     local private="false"
     local dir_name=`basename $(pwd)`
+    local repo_name=""
 
     for var in "$@"
     do
