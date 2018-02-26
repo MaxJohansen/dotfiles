@@ -92,6 +92,6 @@ c() {
     if [[ -x $(which pygmentize) ]]; then
         pygmentize -O style=monokai -f console256 -g $* | less -FXR
     else
-        less -FXRS $*
+        $PAGER $*
     fi
 }
