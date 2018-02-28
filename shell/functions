@@ -3,7 +3,8 @@
 github-create() {
     local invalid_credentials=""
     local private="false"
-    local dir_name=`basename $(pwd)`
+    local dir_name
+    dir_name=$(basename "$(pwd)")
     local repo_name=""
 
     for var in "$@"
@@ -20,23 +21,23 @@ github-create() {
         return 1
     fi
 
-    if [ -z $repo_name ]; then
+    if [ -z "$repo_name" ]; then
         echo "Repo name (hit enter to use '$dir_name')?"
-        read repo_name
+        read -r repo_name
     fi
 
-    if [ -z $repo_name ]; then
+    if [ -z "$repo_name" ]; then
         repo_name=$dir_name
     fi
 
-    username=`git config github.user`
-    if [ -z $username ]; then
+    username=$(git config github.user)
+    if [ -z "$username" ]; then
         echo "Could not find username, run 'git config --global github.user <username>'"
         invalid_credentials=1
     fi
 
-    token=`git config github.token`
-    if [ -z $token ]; then
+    token=$(git config github.token)
+    if [ -z "$token" ]; then
         echo "Could not find token, run 'git config --global github.token <token>'"
         invalid_credentials=1
     fi
@@ -46,7 +47,7 @@ github-create() {
     fi
 
     echo -n "Creating Github repository '$repo_name' ... "
-    httpcode=`curl --silent --output /dev/null --write-out %{http_code} -u $username:$token -d '{"name":"'$repo_name'", "private": '$private'}' https://api.github.com/user/repos`
+    httpcode=$(curl --silent --output /dev/null --write-out "%{http_code}" -u "$username":"$token" -d '{"name":"'"$repo_name"'", "private": '$private'}' https://api.github.com/user/repos)
     case $httpcode in
         201)
         ;;
@@ -66,32 +67,32 @@ github-create() {
     echo "done."
 
     echo -n "Pushing local code to remote ... "
-    git remote add origin git@github.com:$username/$repo_name.git > /dev/null 2>&1
+    git remote add origin git@github.com:"$username"/"$repo_name".git > /dev/null 2>&1
     git push -u origin master > /dev/null 2>&1
     echo "done."
 }
 
 transfer() {
     if [ $# -eq 0 ]; then
-        echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md";
+        echo -e "No arguments specified. Usage:\\necho transfer /tmp/test.md\\ncat /tmp/test.md | transfer test.md";
         return 1;
     fi
 
     tmpfile=$( mktemp -t transferXXX );
     if tty -s; then
         basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g');
-        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile;
+        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> "$tmpfile";
     else
-        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile;
+        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "$tmpfile";
     fi;
-    cat $tmpfile;
-    rm -f $tmpfile;
+    cat "$tmpfile";
+    rm -f "$tmpfile";
 }
 
 c() {
     if [[ -x $(which pygmentize) ]]; then
-        pygmentize -O style=monokai -f console256 -g $* | less -FXR
+        pygmentize -O style=monokai -f console256 -g "$*" | less -FXR
     else
-        $PAGER $*
+        $PAGER "$*"
     fi
 }
