@@ -68,6 +68,11 @@ github-create() {
 
     echo -n "Pushing local code to remote ... "
     git remote add origin git@github.com:"$username"/"$repo_name".git > /dev/null 2>&1
+    if [[ $? = 128 ]]; then
+        echo -n "origin already exists! Renaming to old_origin and moving this repo to Github ... "
+        git remote rename origin old_origin > /dev/null 2>&1
+        git remote add origin git@github.com:"$username"/"$repo_name".git > /dev/null 2>&1
+    fi
     git push -u origin master > /dev/null 2>&1
     echo "done."
 }
