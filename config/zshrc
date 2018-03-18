@@ -11,7 +11,7 @@ HYPHEN_INSENSITIVE="false"
 HIST_STAMPS="dd.mm.yyyy"
 HIST_IGNORE_SPACE="true"
 
-plugins=(git sudo python rails ruby extract zsh-syntax-highlighting)
+plugins=(git sudo extract zsh-syntax-highlighting)
 
 export PATH=$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.rvm/bin:$HOME/bin:$PATH
 
