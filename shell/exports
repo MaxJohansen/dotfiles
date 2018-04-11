@@ -2,3 +2,5 @@
 
 export SSH_KEY_PATH="$HOME/.ssh/rsa_id"
 export LESS="-FRESX"
+export VISUAL="code"
+export EDITOR=$VISUAL
