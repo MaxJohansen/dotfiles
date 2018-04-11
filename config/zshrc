@@ -13,7 +13,7 @@ HIST_IGNORE_SPACE="true"
 
 plugins=(git sudo extract zsh-syntax-highlighting)
 
-export PATH=$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.rvm/bin:$HOME/bin:$PATH
+export PATH=$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.rvm/bin:$HOME/bin:$HOME/.local/bin:$PATH
 
 source $ZSH/oh-my-zsh.sh
 source ~/.shell_env
