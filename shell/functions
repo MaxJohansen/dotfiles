@@ -90,7 +90,7 @@ transfer() {
     else
         curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "$tmpfile";
     fi;
-    cat "$tmpfile";
+    cat "$tmpfile" | tee >(cat) | clip;
     rm -f "$tmpfile";
 }
 
