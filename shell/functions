@@ -90,7 +90,12 @@ transfer() {
     else
         curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "$tmpfile";
     fi;
-    cat "$tmpfile" | tee >(cat) | clip;
+    if [[ ! $(which clip) =~ 'not found' ]]; then
+      tee >(cat) < "$tmpfile" | clip
+    else
+      cat "$tmpfile"
+    fi
+
     rm -f "$tmpfile";
 }
 
