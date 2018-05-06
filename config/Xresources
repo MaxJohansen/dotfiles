@@ -1,0 +1,79 @@
+! Nerd fonts rule, fallback to Noto Color for real emojis
+URxvt.font: xft:DejaVuSansMono Nerd Font:size=14
+URxvt.boldFont: xft:DejaVuSansMono Nerd Font:size=14:style=Bold
+URxvt.italicFont: xft:DejaVuSansMono Nerd Font:size=14:style=Italic
+URxvt.boldItalicFont: xft:DejaVuSansMono Nerd Font:size=14:style=Bold Oblique
+
+! Disable the hideous scrollbar
+URxvt.scrollBar: false
+
+! Disable Ctrl-shift toggling ISO-14755 mode
+URxvt*iso14755: False
+URxvt*iso14755_52: False
+
+! Remember to install tabbedex from the AUR
+URxvt.perl-ext-common: default,clipboard,selection-to-clipboard,url-select,keyboard-select,tabbedex,resize-font,pasta
+
+! Select urls with the keyboard instead of the mouse
+URxvt.keysym.Control-Meta-l: perl:url-select:select_next
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+URxvt.keyboard-select.clipboard: true
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: true
+
+! Hide the tab-bar if there is only one tab
+URxvt.tabbedex.autohide: true
+
+! Lemme have that copy-paste action
+URxvt.keysym.C-S-V: perl:pasta:paste
+URxvt.clipboard.autocopy: true
+
+! Base16 Eighties
+#define base00 #2d2d2d
+#define base01 #393939
+#define base02 #515151
+#define base03 #747369
+#define base04 #a09f93
+#define base05 #d3d0c8
+#define base06 #e8e6df
+#define base07 #f2f0ec
+#define base08 #f2777a
+#define base09 #f99157
+#define base0A #ffcc66
+#define base0B #99cc99
+#define base0C #66cccc
+#define base0D #6699cc
+#define base0E #cc99cc
+#define base0F #d27b53
+
+! Dark color scheme
+*.foreground:   base05
+*.background:   base00
+*.cursorColor:  base05
+*.cursorColor2:  base05
+*.cursorUnderline: true
+*.cursorBlink: true
+
+*.color0:       base00
+*.color1:       base08
+*.color2:       base0B
+*.color3:       base0A
+*.color4:       base0D
+*.color5:       base0E
+*.color6:       base0C
+*.color7:       base05
+*.color8:       base03
+*.color9:       base08
+*.color10:      base0B
+*.color11:      base0A
+*.color12:      base0D
+*.color13:      base0E
+*.color14:      base0C
+*.color15:      base07
+*.color16:      base09
+*.color17:      base0F
+*.color18:      base01
+*.color19:      base02
+*.color20:      base04
+*.color21:      base06

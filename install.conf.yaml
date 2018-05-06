@@ -8,14 +8,17 @@
 - link:
     ~/.shell: shell
     ~/.shell_env: config/shell_env
-    ~/.oh-my-zsh/: oh-my-zsh
-    ~/.zshrc: config/zshrc
     ~/.bashrc: config/bashrc
     ~/.bash_profile: config/bash_profile
     ~/.gitconfig: config/gitconfig
     ~/.gitignore: config/gitignore
     ~/.gdbinit: config/gdbinit
     ~/.editorconfig: config/editorconfig
+    ~/.zshrc: config/zshrc
+    ~/.xinitrc: config/xinitrc
+    ~/.Xresources: config/Xresources
+    ~/.urxvt: urxvt
+    ~/.oh-my-zsh/: oh-my-zsh
     ~/.oh-my-zsh/custom/themes/lambda-mod.zsh-theme: lambda-mod-zsh-theme/lambda-mod.zsh-theme
 
 - shell:
