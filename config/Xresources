@@ -1,4 +1,4 @@
-! Nerd fonts rule, fallback to Noto Color for real emojis
+! Nerd fonts rule
 URxvt.font: xft:DejaVuSansMono Nerd Font:size=14
 URxvt.boldFont: xft:DejaVuSansMono Nerd Font:size=14:style=Bold
 URxvt.italicFont: xft:DejaVuSansMono Nerd Font:size=14:style=Italic
@@ -7,11 +7,24 @@ URxvt.boldItalicFont: xft:DejaVuSansMono Nerd Font:size=14:style=Bold Oblique
 ! Disable the hideous scrollbar
 URxvt.scrollBar: false
 
+! PrintScr outputs to clipboard
+URxvt.print-pipe: cat > $HOME/$(echo urxvt.dump.$(date +'%Y%M%d%H%m%S'))
+
+! Login shell please
+URxvt.loginShell: true
+! Fade by 30% when not focused
+URxvt.fading: 30
+
+! Old habits die hard, I need to move around with the arrow keys
+URxvt.keysym.C-Up: \033[1;5A
+URxvt.keysym.C-Down: \033[1;5B
+URxvt.keysym.C-Left: \033[1;5D
+URxvt.keysym.C-Right: \033[1;5C
+
 ! Disable Ctrl-shift toggling ISO-14755 mode
 URxvt*iso14755: False
 URxvt*iso14755_52: False
 
-! Remember to install tabbedex from the AUR
 URxvt.perl-ext-common: default,clipboard,selection-to-clipboard,url-select,keyboard-select,tabbedex,resize-font,pasta
 
 ! Select urls with the keyboard instead of the mouse
@@ -24,6 +37,13 @@ URxvt.url-select.underline: true
 
 ! Hide the tab-bar if there is only one tab
 URxvt.tabbedex.autohide: true
+URxvt.tabbed.tab-fg: 4
+URxvt.tabbed.tab-bg: 0
+URxvt.tabbedex.tabbar-fg: 1
+URxvt.tabbedex.tabbar-bg: 0
+
+URxvt.keysym.C-S-Left:  tabbedex:move_tab_left
+URxvt.keysym.C-S-Right:  tabbedex:move_tab_right
 
 ! Lemme have that copy-paste action
 URxvt.keysym.C-S-V: perl:pasta:paste
