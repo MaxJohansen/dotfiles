@@ -174,30 +174,54 @@ Foreground and background colours of the tab title.  (2, 0) by default which
 translates to green on black.  See B<tabbar-fg> for more documentation on how
 colours can be specified.
 
-=item B<new-tab-command>: I<string>
+=item B<new-tab-command>: I<multiline-string>
 
-Specifies how urxvt's B<-e> switch affects tabs created by tabbedex.  The
-resource can have one of three values:
+Configures what commands to run in each new tab.  The first tab will always
+start command specified by the B<-e> switch passed when invoking urxvt but
+subsequent tabs will consult this resource.
+
+Each non-empty line of the resource specifies command to run in subsequent tabs.
+Possible values are:
 
 =over
 
 =item I<inherit>
 
-The default.  The B<-e> command will be used by all tabs created by tabbedex.
+The initial B<-e> command is used.  If urxvt was started without B<-e> switch,
+the tab won't use it either, otherwise the exact same flag is used.
 
 =item I<clear>
 
-Only the initial tab will use the B<-e> switch provided on urxvt's command line.
-All other tabs will act as if the option was not provided.
+No B<-e> flag is used at all even if urxvt was started with one.
 
 =item I<-e B<another command>>
 
-The initial tab will use the B<-e> switch provided on urxvt's command line (if
-any) while all other tabs will use switch specified by this setting.  Note that
-parsing of the resource simply splits words on white space so things like I<-e
-my-prog "argument with spaces"> will not work.
+Specified command is used effectively overriding whatever B<-e> flag has been
+specified as urxvt argument (if any).  Note that parsing splits words on any
+white-space so things like I<-e my-prog "argument with spaces"> will not work.
+If this is a problem compare I<-c> below.
+
+=item I<-c B<shell command>>
+
+Specified shell command is executed.  This is similar to I<-e /bin/sh -c B<shell
+command>> except that C<$SHELL> environment variable is consulted to get shell
+and B<shell command> is not split into words.  This means that I<-c exec my-prod
+"arguments with spaces"> will work correctly.
 
 =back
+
+Once commands specified in B<new-tab-command> resource run out, all subsequent
+tabs will use the same command as the previous tab.  For example, let's look at
+the following configuration:
+
+    URxvt.tabbedex.new-tab-command: \
+        -e /usr/bin/irssi \n\
+        -c echo /var/log/syslog:; exec tail -f /var/log/syslog \n\
+        clear
+
+With the above configuration if urxvt is started with B<-e /usr/bin/emacs>
+switch and user creates total of five tabs, the commands running in each will
+be: Emacs, Irssi, tailing of C</var/log/syslog> and two shells.
 
 =item B<no-tabbedex-keys>: I<boolean>
 
@@ -672,13 +696,26 @@ sub tab_term_init {
 }
 
 sub new_tab {
-	my ($root) = @_;
+	my ($root, $tab) = @_;
 	push @urxvt::TERM_INIT, sub { $root->tab_term_init($_[0]) };
 	push @urxvt::TERM_EXT, urxvt::ext::tabbedex::;
-	new urxvt::term
-		$root->env, $urxvt::RXVTNAME,
-		-embed => $root->parent,
-		@{ $root->{argv} }
+
+	my %env = %{ $root->env };
+	$env{'URXVT_TAB'} = sprintf '%d:', $root->{tabs_open_so_far};
+
+	my @args;
+	if ($tab) {
+		my $cwd = $tab->get_cwd;
+		if ($cwd && -d $cwd && -x $cwd) {
+			push @args, -cd => $cwd;
+		}
+	}
+	push @args, @{ $root->{argv}[0] };
+	if (@{ $root->{argv} } > 1) {
+		shift @{ $root->{argv} };
+	}
+
+	new urxvt::term \%env, $urxvt::RXVTNAME, -embed => $root->parent, @args
 }
 
 
@@ -831,7 +868,7 @@ _on button_release => sub {
 		} elsif ($col >= $button->[1]) {
 			# nop
 		} elsif ($button->[2] == -1) {
-			$root->new_tab;
+			$root->new_tab($root->{cur});
 		} else {
 			$root->make_current($root->{tabs}[$button->[2]]);
 		}
@@ -875,7 +912,7 @@ sub init {
    $root->{autohide}         = $rs->bool('autohide', 1);
    $root->{register_keysyms} = !$rs->bool('no-tabbedex-keys', 0);
    $root->{reopen_on_close}  = $rs->bool('reopen-on-close', 0);
-   $root->{new_tab_command}  = $rs->text('new-tab-command', 'inherit');
+   $root->{argv}             = $rs->argv('new-tab-command', $root->argv);
 
    if (my $blacklist = $rs->text('perl-ext-blacklist')) {
        $blacklist =~ s/,/,-/;
@@ -889,6 +926,8 @@ sub init {
                                               [2, 0, 'title']);
    $root->{init_cmd} = "$colours_cmd\033[?25l";
    $root->{rs_colours} = $colours;
+
+   $root->{tabs_open_so_far} = 0;
 }
 
 _on start => sub {
@@ -900,29 +939,11 @@ _on start => sub {
 
    $root->cmd_parse(delete $root->{init_cmd});
 
-   my @argv = $root->argv;
-   do {
-      shift @argv;
-   } while @argv && $argv[0] ne "-e";
-   $root->{argv} = \@argv;
-
    if ($root->{tab_title}) {
       $root->{tab_title} = $root->XInternAtom("_NET_WM_NAME", 1);
    }
 
    $root->new_tab;
-
-   if ($root->{new_tab_command} eq 'inherit') {
-      # nop
-   } elsif ($root->{new_tab_command} eq 'clear') {
-      $root->{argv} = [];
-   } elsif ($root->{new_tab_command} =~ /^-e\s/) {
-      $root->{argv} = [split /\s+/, $root->{new_tab_command}];
-   } else {
-      printf "tabbedex: unrecognised value of new-tab-command: '%s'\n",
-         $root->{new_tab_command};
-   }
-   delete $root->{new_tab_command};
 
    if (defined $root->{timeouts}) {
       my $interval = ($root->{timeouts}[@{ $root->{timeouts} } - 1]->[0]);
@@ -960,6 +981,7 @@ sub tab_start {
 	$tab->XChangeInput ($tab->parent, urxvt::PropertyChangeMask);
 	push @{ $root->{tabs} }, $tab;
 	$root->make_current($tab);
+	++$root->{tabs_open_so_far};
 	();
 }
 
@@ -983,7 +1005,7 @@ sub tab_destroy {
 			});
 			return ();
 		}
-		$root->new_tab;
+		$root->new_tab($tab);
 	}
 
 	if ($root->{cur} == $tab) {
@@ -1048,70 +1070,140 @@ sub tab_add_lines {
 	();
 }
 
+{
+	package urxvt::ext::tabbedex::tabref;
+
+	sub parse {
+		my ($root, $tabref) = @_;
+		if ($tabref =~ /^(?:prev(?:ious)?|left)$/) {
+			('rel', -1)
+		} elsif ($tabref =~ /^(?:next|right)$/) {
+			('rel', +1)
+		} elsif ($tabref =~ /^-?\d+$/) {
+			('rel', $tabref)
+		} elsif ($tabref =~ /^#(\d+)$/) {
+			0 < $1 && $1 <= @{ $root->{tabs} } ? ('abs', $1 - 1) : (undef)
+		} elsif ($tabref =~ /^-(\d+)$/) {
+			my $tabs = @{ $root->{tabs} };
+			0 < $1 && $1 <= $tabs ? ('abs', $tabs - $1) : (undef)
+		} else {
+			()
+		}
+	}
+
+	sub strip {
+		my ($pkg, $root, $tab, $cmd) = @_;
+		my $idx = index $cmd, ':';
+		if ($idx < 0) {
+			return ($tab, $cmd)
+		}
+		my $ref = new($pkg, $root, $tab, substr $cmd, 0, $idx);
+		$ref->parsed ? ($ref->tab, substr($cmd, $idx + 1))
+		             : ($tab, $cmd)
+	}
+
+	sub new {
+		my ($pkg, $root, $tab, $tabref) = @_;
+		bless [ $root->{tabs}, $tab, parse($root, $tabref) ], $pkg
+	}
+
+	sub parsed { @{ $_[0] } > 2 }
+	sub ok     { defined $_[0][2] }
+	sub is_rel { $_[0][2] eq 'rel' }
+	sub is_abs { $_[0][2] eq 'abs' }
+	sub num    { $_[0][3] }
+	sub index  {
+		my ($tabs, $tab, $mode, $num) = @{ $_[0] };
+		if ($mode eq 'abs') {
+			$num
+		} elsif ($mode eq 'rel') {
+			($tab->index + @$tabs + $num % @$tabs) % @$tabs
+		} else {
+			undef
+		}
+	}
+	sub tab    {
+		my ($tabs, $tab, $mode, $num) = @{ $_[0] };
+		$mode && $tabs->[$_[0]->index]
+	}
+}
+
+# Format of action is:
+#  <tab-ref>:<action>:<argument>
+# where <tab-ref> and <argument> (along with colons next to them) are optional.
+#
+#  select_tab:<tab-ref>
+#  move_tab:<tab-ref>
+#  rename_tab:<name>
 
 sub tab_action {
 	my ($root, $tab, $cmd) = @_;
-	if ($cmd eq 'new_tab') {
-		if (!$root->{cur}->is_being_renamed) {
-			$root->new_tab;
+
+	($tab, $cmd) = strip urxvt::ext::tabbedex::tabref($root, $tab, $cmd);
+	if (!$tab) {
+		return;
+	}
+
+	# Handle aliases and extract argument.
+	my ($cmd, $arg) = do {
+		if ($cmd =~ /^move_tab_(left|right)$/) {
+			('move_tab', $1)
+		} elsif ($cmd =~ /^(prev|next)_tab$/) {
+			('goto_tab', $1)
+		} elsif ($cmd =~ /^goto_tab_(.*)$/) {
+			('goto_tab', '#' . $1)
+		} else {
+			split /:/, $cmd, 2;
 		}
-	} elsif ($cmd eq 'next_tab') {
-		$root->change_tab($tab, 1);
-	} elsif ($cmd eq 'prev_tab') {
-		$root->change_tab($tab, -1);
-	} elsif ($cmd eq 'move_tab_left') {
-		$root->move_tab($tab, -1);
-	} elsif ($cmd eq 'move_tab_right') {
-		$root->move_tab($tab, 1);
-	} elsif ($cmd =~ /^goto_tab[_:](-?\d+)$/) {
-		if ($1 != 0 && !$root->{cur}->is_being_renamed && @{ $root->{tabs} } > 1) {
-			my $idx = $1 > 0 ? ($1 - 1) : (@{ $root->{tabs} } + $1);
-			if ($idx >= 0 && $idx < @{ $root->{tabs} }) {
-				$root->make_current ($root->{tabs}[$idx]);
-			}
-		}
-	} elsif ($cmd eq 'rename_tab') {
-		if ($tab == $root->{cur} && $tab->start_rename_tab) {
-			$root->refresh;
-		}
-	} elsif ($cmd eq 'kill_tab') {
-		$tab->destroy;
+	};
+
+	# Finally, call action handler.
+	if (defined(my $sub = $root->can('tab_action_' . $cmd))) {
+		$sub->($root, $tab, $arg);
 	}
 	()
 }
 
-sub change_tab {
-    my ($root, $tab, $direction) = @_;
-
-    if (!$root->{cur}->is_being_renamed && @{ $root->{tabs} } > 1) {
-        my $idx = $tab->index + $direction;
-        $root->make_current ($root->{tabs}[$idx % @{ $root->{tabs}}]);
-    }
-
-    ();
+sub tab_action_new_tab {
+	my ($root, $tab, $arg) = @_;
+	if (!$root->{cur}->is_being_renamed) {
+		# TODO: add $arg support
+		$root->new_tab($tab);
+	}
 }
 
-sub move_tab {
-	my ($root, $tab, $direction) = @_;
-	if (@{ $root->{tabs} } < 2) {
-		return;
+sub tab_action_goto_tab {
+	my ($root, $tab, $arg) = @_;
+	if ($arg && !$root->{cur}->is_being_renamed && @{ $root->{tabs} } > 1 &&
+	    ($tab = new urxvt::ext::tabbedex::tabref($root, $tab, $arg)->tab)) {
+		$root->make_current($tab);
 	}
+}
 
-	my $last = $#{$root->{tabs}};
-	my $idx = $tab->index;
-
-	if ($idx == 0 && $direction == -1) {
-		push @{$root->{tabs}}, shift @{$root->{tabs}};
-		$idx = $last;
-	} elsif ($idx == $last && $direction == 1) {
-		unshift @{$root->{tabs}}, pop @{$root->{tabs}};
-		$idx = 0;
-	} else {
-		($root->{tabs}[$idx], $root->{tabs}[$idx + $direction]) =
-			($root->{tabs}[$idx + $direction], $root->{tabs}[$idx]);
-		$idx += $direction;
+sub tab_action_move_tab {
+	my ($root, $tab, $arg) = @_;
+	my ($ref, $idx, $new);
+	if (@{ $root->{tabs} } > 1 && $arg &&
+	    ($ref = new urxvt::ext::tabbedex::tabref($root, $tab, $arg))->ok &&
+	    ($idx = $tab->index) != ($new = $ref->index)) {
+		my $tabs = $root->{tabs};
+		splice @$tabs, $new, 0, splice @$tabs, $idx, 1;
+		$root->refresh;
 	}
-	$root->refresh;
+}
+
+sub tab_action_rename_tab {
+	my ($root, $tab, $arg) = @_;
+	if (defined($arg)
+	    ? $tab->set_name($root->special_encode($arg))
+	    : $tab == $root->{cur} && $tab->start_rename_tab) {
+		$root->refresh;
+	}
+}
+
+sub tab_action_kill_tab {
+	my ($root, $tab, $arg) = @_;
+	$tab->destroy;
 }
 
 
@@ -1132,6 +1224,8 @@ package urxvt::ext::tabbedex::tab;
 
 # helper extension implementing the subwindows of a tabbed terminal.
 # simply proxies all interesting calls back to the tabbedex class.
+
+use POSIX qw/tcgetpgrp/;
 
 
 sub enable_hooks {
@@ -1156,6 +1250,44 @@ sub index {
 	my $idx = 0;
 	++$idx while $tabs->[$idx] != $tab;
 	$idx;
+}
+
+
+sub get_cwd {
+	no warnings 'redefine';
+	if (-d '/proc') {
+		*get_cwd = \&_get_cwd_impl;
+	} else {
+		urxvt::warn('tabbedex: /proc missing (not running Linux?), ' .
+			    "CWD preserving not supported\n");
+		*get_cwd = sub { undef };
+	}
+	goto \&get_cwd;
+}
+
+sub _get_cwd_impl {
+	my ($fd, $pgid);
+	if (($fd = $_[0]->pty_fd) < 0 ||
+	    ($pgid = tcgetpgrp($fd)) < 0) {
+		return;
+	}
+
+	if (-d "/proc/$pgid/cwd") {
+		return eval { readlink "/proc/$pgid/cwd" };
+	}
+
+	if (opendir(my $dir, '/proc')) {
+		while (my $pid = readdir $dir) {
+			if ($pid != /^[0-9]+$/ &&
+			    -d "/proc/$pid/cwd" &&
+			    open(my $fh, '<', "/proc/$pid/stat")) {
+				if ($pgid == (split ' ', scalar <$fh>)[4]) {
+					return eval { readlink "/proc/$pid/cwd" };
+				}
+			}
+		}
+	}
+	undef
 }
 
 
@@ -1308,6 +1440,36 @@ sub colours {
 	}
 
 	(\@_, $cmd ? "\e]4$cmd\a" : '')
+}
+
+sub argv {
+	my $rs = shift;
+	my $cmd = $rs->text(shift);
+
+	do {
+		shift;
+	} while @_ && $_[0] ne "-e";
+
+	[\@_, map {
+		s/^\s+|\s+$//g;
+		if ($_ eq '') {
+			()
+		} elsif ($_ eq 'inherit') {
+			(\@_)
+		} elsif ($_ eq 'clear') {
+			([])
+		} elsif ($_ =~ /^-e\s/) {
+			([split /\s+/])
+		} elsif ($_ =~ /^-c\s/) {
+			$_ =~ s/^-c\s+//;
+			([-e => ($ENV{SHELL} // '/bin/sh'), -c => $_])
+		} else {
+			urxvt::warn('tabbedex: unrecognised value of ' .
+			            '‘new-tab-command’ resource: ‘' . $_ .
+			            "’\n");
+			()
+		}
+	} split /\n/, $cmd // '']
 }
 
 
