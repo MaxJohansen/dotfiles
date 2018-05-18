@@ -10,6 +10,7 @@ HYPHEN_INSENSITIVE="false"
 PROMPT_EOL_MARK=
 HIST_STAMPS="dd.mm.yyyy"
 HIST_IGNORE_SPACE="true"
+BROWSER="google-chrome-stable"
 
 plugins=(git sudo extract zsh-syntax-highlighting)
 
