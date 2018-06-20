@@ -1,6 +1,7 @@
 [user]
 	name = Mads Johansen
 	email = johansen.max@gmail.com
+	signingkey = 1C407D24CB78CC05
 [core]
 	editor = nano
 	excludesfile = ~/.gitignore
