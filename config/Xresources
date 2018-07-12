@@ -1,3 +1,14 @@
+! Rofi color theme
+! ================
+rofi.color-enabled: true
+rofi.color-window: argb:ee273238, #273238, argb:3a1e2529
+rofi.color-normal: argb:00273238, #c1c1c1, argb:3a273238, #394249, #ffffff
+rofi.color-active: argb:00273238, #80cbc4, argb:3a273238, #394249, #80cbc4
+rofi.color-urgent: argb:00273238, #ff1844, argb:3a273238, #394249, #ff1844
+
+! URxvt settings
+! ==============
+
 ! Nerd fonts rule
 URxvt.font: xft:DejaVuSansMono Nerd Font:size=14
 URxvt.boldFont: xft:DejaVuSansMono Nerd Font:size=14:style=Bold
@@ -79,3 +90,4 @@ URxvt.clipboard.autocopy: true
 *.color19:      #515151
 *.color20:      #a09f03
 *.color21:      #e8e6df
+
