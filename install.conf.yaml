@@ -6,7 +6,9 @@
 - clean: ['~']
 
 - link:
-    ~/.shell: shell
+    ~/.shell:
+    ~/.config/i3:
+    ~/.oh-my-zsh/custom/themes/lambda-mod.zsh-theme: lambda-mod-zsh-theme/lambda-mod.zsh-theme
     ~/.shell_env: config/shell_env
     ~/.bashrc: config/bashrc
     ~/.bash_profile: config/bash_profile
@@ -17,9 +19,10 @@
     ~/.zshrc: config/zshrc
     ~/.xinitrc: config/xinitrc
     ~/.Xresources: config/Xresources
-    ~/.urxvt: urxvt
-    ~/.oh-my-zsh/: oh-my-zsh
-    ~/.oh-my-zsh/custom/themes/lambda-mod.zsh-theme: lambda-mod-zsh-theme/lambda-mod.zsh-theme
+    ~/.urxvt:
+    ~/.oh-my-zsh: oh-my-zsh
+    ~/.config/wallpaper.png: theme/wallpaper.png
+    ~/.i3blocks.conf: i3/i3blocks.conf
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
