@@ -8,7 +8,9 @@
 - link:
     ~/.shell:
     ~/.config/i3:
-    ~/.oh-my-zsh/custom/themes/lambda-mod.zsh-theme: lambda-mod-zsh-theme/lambda-mod.zsh-theme
+    ~/.oh-my-zsh:
+    ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme: spaceship-prompt/spaceship.zsh-theme
+    ~/.local/share/fonts/DejaVuSansMono: fonts/DejaVuSansMono
     ~/.shell_env: config/shell_env
     ~/.bashrc: config/bashrc
     ~/.bash_profile: config/bash_profile
@@ -19,8 +21,6 @@
     ~/.zshrc: config/zshrc
     ~/.xinitrc: config/xinitrc
     ~/.Xresources: config/Xresources
-    ~/.urxvt:
-    ~/.oh-my-zsh: oh-my-zsh
     ~/.config/wallpaper.png: theme/wallpaper.png
     ~/.i3blocks.conf: i3/i3blocks.conf
 

@@ -7,3 +7,6 @@
 [submodule "lambda-mod-zsh-theme"]
 	path = lambda-mod-zsh-theme
 	url = git@github.com:halfo/lambda-mod-zsh-theme.git
+[submodule "spaceship-prompt"]
+	path = spaceship-prompt
+	url = git@github.com:denysdovhan/spaceship-prompt.git
