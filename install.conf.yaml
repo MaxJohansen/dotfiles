@@ -19,8 +19,8 @@
     ~/.gdbinit: config/gdbinit
     ~/.editorconfig: config/editorconfig
     ~/.zshrc: config/zshrc
+    ~/.hyper.js: config/hyper.js
     ~/.xinitrc: config/xinitrc
-    ~/.Xresources: config/Xresources
     ~/.config/wallpaper.png: theme/wallpaper.png
     ~/.i3blocks.conf: i3/i3blocks.conf
 
