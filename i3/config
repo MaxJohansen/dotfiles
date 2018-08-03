@@ -5,7 +5,7 @@ gaps inner 15
 gaps outer 15
 font pango:Droid Sans 10
 set $mod Mod4
-set $term --no-startup-id urxvt
+set $term --no-startup-id hyper
 set $browser --no-startup-id google-chrome-stable
 
 # Hold modifier to move floating windows

@@ -10,10 +10,10 @@ rofi.color-urgent: argb:00273238, #ff1844, argb:3a273238, #394249, #ff1844
 ! ==============
 
 ! Nerd fonts rule
-URxvt.font: xft:DejaVuSansMono Nerd Font:size=14
-URxvt.boldFont: xft:DejaVuSansMono Nerd Font:size=14:style=Bold
-URxvt.italicFont: xft:DejaVuSansMono Nerd Font:size=14:style=Italic
-URxvt.boldItalicFont: xft:DejaVuSansMono Nerd Font:size=14:style=Bold Oblique
+URxvt.font: xft:DejaVu Sans Mono for Powerline:size=14,xft: PowerlineSymbols:size=14
+URxvt.boldFont: xft:DejaVu Sans Mono Bold for Powerline:size=14:style=Bold
+URxvt.italicFont: xft:DejaVu Sans Mono Oblique for Powerline:size=14:style=Italic
+URxvt.boldItalicFont: xft:DejaVu Sans Mono Bold Oblique for Powerline:size=14:style=Bold Oblique
 
 ! Disable the hideous scrollbar
 URxvt.scrollBar: false
@@ -48,8 +48,8 @@ URxvt.url-select.underline: true
 
 ! Hide the tab-bar if there is only one tab
 URxvt.tabbedex.autohide: true
-URxvt.tabbed.tab-fg: 4
-URxvt.tabbed.tab-bg: 0
+URxvt.tabbedex.tab-fg: 4
+URxvt.tabbedex.tab-bg: 0
 URxvt.tabbedex.tabbar-fg: 1
 URxvt.tabbedex.tabbar-bg: 0
 
