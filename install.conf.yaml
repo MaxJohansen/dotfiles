@@ -5,6 +5,9 @@
 
 - clean: ['~']
 
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+
 - link:
     ~/.shell:
     ~/.config/i3:
@@ -23,6 +26,3 @@
     ~/.xinitrc: config/xinitrc
     ~/.config/wallpaper.png: theme/wallpaper.png
     ~/.i3blocks.conf: i3/i3blocks.conf
-
-- shell:
-    - [git submodule update --init --recursive, Installing submodules]
