@@ -18,5 +18,5 @@ export PATH=$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.rvm/bin:$HOME/bin:$HOME/.l
 
 source $ZSH/oh-my-zsh.sh
 source ~/.shell_env
-source /usr/share/nvm/init-nvm.sh
+[[ -s /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
