@@ -3,9 +3,8 @@
 for_window [class="^.*"] border pixel 3
 gaps inner 15
 gaps outer 15
-font pango:Droid Sans 10
 set $mod Mod4
-set $term --no-startup-id hyper
+set $term --no-startup-id terminology
 set $browser --no-startup-id google-chrome-stable
 
 # Hold modifier to move floating windows
@@ -26,7 +25,7 @@ exec --no-startup-id unclutter
 exec --no-startup-id nm-applet
 
 bar {
-	font xft:DejaVuSansMono Nerd Font 12
+	font xft:DejaVu Sans Mono for Powerline 16
 	status_command i3blocks
 	strip_workspace_numbers yes
 	position bottom
@@ -172,6 +171,7 @@ workspace $ws3 gaps outer 0
 
 workspace $ws6 gaps inner 0
 workspace $ws6 gaps outer 0
+assign [class="Visual Studio Code"] $ws2
 assign [class="Google-chrome"] $ws3
 assign [class="Slack"] $ws4
 assign [class="Spotify"] $ws5
