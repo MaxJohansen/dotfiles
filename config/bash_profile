@@ -3,8 +3,6 @@
 # I do not use bash directly
 # This is just decorational
 
-PATH="/usr/local/bin:$PATH"
-
 # Launches zsh if we're in Linux Subsystem for Windows
 if [ -t 1 ]; then
   exec zsh

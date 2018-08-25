@@ -98,16 +98,3 @@ transfer() {
 
     rm -f "$tmpfile";
 }
-
-c() {
-    if [ $# -eq 0 ]; then
-        echo -e "No arguments specified. Usage:\\n c <text file>";
-        return 1;
-    fi
-
-    if [[ -x $(which pygmentize) ]]; then
-        pygmentize -O style=monokai -f console256 -g "$*" | less -FXR
-    else
-        $PAGER "$*"
-    fi
-}
