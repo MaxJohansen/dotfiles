@@ -3,9 +3,10 @@
 for_window [class="^.*"] border pixel 3
 gaps inner 15
 gaps outer 15
+font pango:DejaVu Sans Mono for Powerline 14
 set $mod Mod4
 set $term --no-startup-id terminology
-set $browser --no-startup-id google-chrome-stable
+set $browser --no-startup-id brave
 
 # Hold modifier to move floating windows
 floating_modifier $mod
