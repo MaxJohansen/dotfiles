@@ -89,8 +89,8 @@ bindsym $mod+Shift+p		exec mypaint
 bindsym $mod+c			gaps inner current plus 5
 bindsym $mod+shift+c		gaps inner current minus 5
 
-bindsym $mod+r			exec --no-startup-id dmenu_run
-bindsym $mod+Shift+r		gaps inner current set 0; gaps outer current set 0
+#bindsym $mod+r			exec --no-startup-id dmenu_run
+#bindsym $mod+Shift+r		gaps inner current set 0; gaps outer current set 0
 
 bindsym $mod+f			fullscreen toggle
 ##bindsym $mod+Shift+f
@@ -115,12 +115,32 @@ bindsym $mod+Shift+x		exec prompt "Are you sure you want to shutdown?" "$shutdow
 bindsym $mod+b			bar mode toggle
 bindsym $mod+Shift+b		floating toggle; sticky toggle; exec --no-startup-id bottomleft
 
-##bindsym $mod+n			exec $term -e newsboat
-##bindsym $mod+Shift+n
+# resize window (you can also use the mouse for that)
+mode "resize" {
+  # These bindings trigger as soon as you enter the resize mode
 
-#bindsym $mod+m 			exec --no-startup-id st -e ncmpcpp
-#bindsym $mod+Shift+m		exec pulseaudio-ctl mute
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym j resize shrink width 10 px or 10 ppt
+  bindsym k resize grow height 10 px or 10 ppt
+  bindsym l resize shrink height 10 px or 10 ppt
+  bindsym oslash resize grow width 10 px or 10 ppt
 
+  # same bindings, but for the arrow keys
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
+
+  # back to normal: Enter or Escape or $mod+r
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
 
 # #---Workspace Bindings---# #
 bindsym $mod+Tab		workspace back_and_forth
@@ -172,8 +192,8 @@ workspace $ws3 gaps outer 0
 
 workspace $ws6 gaps inner 0
 workspace $ws6 gaps outer 0
-assign [class="Visual Studio Code"] $ws2
-assign [class="Google-chrome"] $ws3
+assign [class="code - oss"] $ws2
+assign [class="brave"] $ws3
 assign [class="Slack"] $ws4
 assign [class="Spotify"] $ws5
 for_window [class="Spotify"] move to workspace $ws5
