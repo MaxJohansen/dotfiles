@@ -3,7 +3,7 @@
 for_window [class="^.*"] border pixel 3
 gaps inner 15
 gaps outer 15
-font pango:DejaVu Sans Mono for Powerline 14
+font pango:DejaVuSansMono Nerd Font 14
 set $mod Mod4
 set $term --no-startup-id terminology
 set $browser --no-startup-id brave
@@ -26,7 +26,7 @@ exec --no-startup-id unclutter
 exec --no-startup-id nm-applet
 
 bar {
-	font xft:DejaVu Sans Mono for Powerline 16
+	font xft:DejaVuSansMono Nerd Font 16
 	status_command i3blocks
 	strip_workspace_numbers yes
 	position bottom
