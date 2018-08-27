@@ -11,7 +11,8 @@
     ~/.local/share/fonts/DejaVuSansMono:
       path: fonts/DejaVuSansMono
       create: true
-    ~/bin/:
+    ~/.local/bin/:
+      create: true
       glob: true
       path: bin/*
     ~/.shell_env: config/shell_env
@@ -22,7 +23,6 @@
     ~/.gdbinit: config/gdbinit
     ~/.editorconfig: config/editorconfig
     ~/.zshrc: config/zshrc
-    ~/.hyper.js: config/hyper.js
     ~/.xinitrc: config/xinitrc
     ~/.config/wallpaper.png: theme/wallpaper.png
     ~/.i3blocks.conf: i3/i3blocks.conf
