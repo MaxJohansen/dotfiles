@@ -1,11 +1,10 @@
 [user]
 	name = Mads Johansen
 	email = johansen.max@gmail.com
-	signingkey = 1C407D24CB78CC05
 [core]
 	editor = nano
 	excludesfile = ~/.gitignore
-  pager = "diff-so-fancy | less"
+	pager = "diff-so-fancy | less"
 [include]
 	path = ~/.gitconfig_local
 [gc]
@@ -16,7 +15,5 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	ignore = !git status -s | grep -e ^?? | cut -c 4- >> .gitignore
 	fixup = !sh -c 'REV=$(git rev-parse $1) && git commit -n --fixup $@ && git rebase -i --autosquash $REV^' -
-[commit]
-	gpgsign = true
 [help]
 	autocorrect = -5
