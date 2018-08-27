@@ -28,5 +28,4 @@
     ~/.editorconfig: config/editorconfig
     ~/.zshrc: config/zshrc
     ~/.xinitrc: config/xinitrc
-    ~/.config/wallpaper.png: theme/wallpaper.png
     ~/.i3blocks.conf: i3/i3blocks.conf
