@@ -91,7 +91,7 @@ bindsym $mod+Shift+p		exec mypaint
 bindsym $mod+c			gaps inner current plus 5
 bindsym $mod+shift+c		gaps inner current minus 5
 
-#bindsym $mod+r			exec --no-startup-id dmenu_run
+bindsym $mod+e			exec --no-startup-id rofi -show run
 #bindsym $mod+Shift+r		gaps inner current set 0; gaps outer current set 0
 
 bindsym $mod+f			fullscreen toggle
