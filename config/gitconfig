@@ -12,7 +12,7 @@
 [push]
 	default = simple
 [alias]
-	lg = "!git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset %Cgreen{%G?}%Creset' --abbrev-commit | sed s/{E}// | sed s/{[[:alpha:]]}/✓/ | $PAGER"
+	lg = "!git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset %Cgreen{%G?}%Creset' --abbrev-commit | sed s/{[BEN]}// | sed s/{[[:alpha:]]}/✓/ | $PAGER"
 	ignore = !git status -s | grep -e ^?? | cut -c 4- >> .gitignore
 	fixup = !sh -c 'REV=$(git rev-parse $1) && git commit -n --fixup $@ && git rebase -i --autosquash $REV^' -
 [help]
