@@ -97,8 +97,8 @@ bindsym $mod+e			exec --no-startup-id rofi -show run
 bindsym $mod+f			fullscreen toggle
 ##bindsym $mod+Shift+f
 
-bindsym Control+Mod1+Left	workspace prev
-bindsym Control+Mod1+Right	workspace next
+bindsym $mod+Control+Left	workspace prev
+bindsym $mod+Control+Right	workspace next
 
 bindsym $mod+Shift+g		exec --no-startup-id gimp; workspace $ws6
 
@@ -189,6 +189,8 @@ bindsym $mod+Shift+9	move container to workspace $ws9
 bindsym $mod+Shift+0	move container to workspace $ws10
 
 # Browser workspace doesn't need any gaps
+workspace $ws2 gaps inner 0
+workspace $ws2 gaps outer 0
 workspace $ws3 gaps inner 0
 workspace $ws3 gaps outer 0
 
