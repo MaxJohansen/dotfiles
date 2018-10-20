@@ -12,10 +12,19 @@ HIST_STAMPS="dd.mm.yyyy"
 HIST_IGNORE_SPACE="true"
 BROWSER="brave"
 
-plugins=(git sudo extract zsh-syntax-highlighting)
+plugins=(
+  git
+  sudo
+  httpie
+  extract
+  encode64
+  archlinux
+  command-not-found
+  zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.shell_env
 [[ -s $HOME/.dircolors ]] && eval "$(dircolors $HOME/.dircolors)"
 [[ -s /usr/share/nvm/init-nvm.sh ]] && source /usr/share/nvm/init-nvm.sh
-[[ -s $HOME/.rvm/scripts/rvm ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+[[ -s /usr/share/rvm/scripts/rvm ]] && source /usr/share/rvm/scripts/rvm # Load RVM into a shell session *as a function*
