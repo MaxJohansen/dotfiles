@@ -79,18 +79,25 @@ github-create() {
 
 transfer() {
     if [ $# -eq 0 ]; then
-        echo -e "No arguments specified. Usage:\\necho transfer /tmp/test.md\\ncat /tmp/test.md | transfer test.md";
+        cat <<-EOF
+$0 fatal error: missing argument
+
+usage:
+$0 test.md
+OR
+cat anyfile.md | $0 <name>
+EOF
         return 1;
     fi
 
-    tmpfile=$( mktemp -t transferXXX );
+    tmpfile=$(mktemp -t transferXXX);
     if tty -s; then
         basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g');
         curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> "$tmpfile";
     else
         curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "$tmpfile";
     fi;
-    if [[ ! $(which clip) =~ 'not found' ]]; then
+    if command -v clip > /dev/null; then
       tee >(cat) < "$tmpfile" | clip
     else
       cat "$tmpfile"
