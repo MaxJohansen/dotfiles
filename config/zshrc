@@ -10,7 +10,7 @@ HYPHEN_INSENSITIVE="false"
 PROMPT_EOL_MARK=
 HIST_STAMPS="dd.mm.yyyy"
 HIST_IGNORE_SPACE="true"
-BROWSER="brave"
+BROWSER="vivaldi-stable"
 
 plugins=(
   git
