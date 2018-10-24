@@ -196,8 +196,8 @@ workspace $ws3 gaps outer 0
 
 workspace $ws6 gaps inner 0
 workspace $ws6 gaps outer 0
-assign [class="code - oss"] $ws2
-assign [window_role="browser"] $ws3
+assign [class="Code"] $ws2
+assign [class="Vivaldi-stable"] $ws3
 assign [class="Slack"] $ws4
 assign [class="Spotify"] $ws5
 for_window [class="Spotify"] move to workspace $ws5
