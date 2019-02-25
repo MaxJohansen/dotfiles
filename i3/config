@@ -5,7 +5,7 @@ gaps inner 15
 gaps outer 15
 font pango:Fira Code 14
 set $mod Mod4
-set $term --no-startup-id terminology
+set $term --no-startup-id kitty
 set $browser --no-startup-id vivaldi-stable
 
 # Hold modifier to move floating windows

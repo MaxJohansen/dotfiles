@@ -1,0 +1,170 @@
+[tasks.full]
+    deps = ["default", "i3", "gui"]
+
+[tasks.wsl]
+    deps = ["default"]
+
+[tasks.default]
+    deps = ["fish", "general-tools", "dev-tools", "cli-utils"]
+    links = [[".Xresources", "config/Xresources"], [".dircolors", "config/dircolors"]]
+
+# general
+
+[tasks.fish]
+    rejects = [["which", "fish"]]
+    cmds = [["@install", "fish"], ["chsh", "-s", "/usr/bin/fish"]]
+    links = [
+        [".config/fish/config.fish", "fish/config.fish"],
+        [".config/fish/functions", "fish/functions"],
+    ]
+
+[tasks.general-tools]
+    cmds = [["@install",
+        "bat",
+        "bzip2",
+        "coreutils",
+        "ripgrep",
+        "htop",
+        "inxi",
+        "jq",
+        "tldr",
+        "wget",
+        "which",
+        "zip",
+    ]]
+
+[tasks.dev-tools]
+    deps =["git"]
+    cmds = [["@install",
+        "binutils",
+        "clang",
+        "gcc",
+        "gcc-libs",
+        "gdb",
+        "make",
+    ]]
+    links = [
+        [".editorconfig", "config/editorconfig"],
+        [".gdbinit", "config/gdbinit"],
+        [".nanorc", "config/nanorc"],
+    ]
+
+[tasks.docker]
+    cmds = [
+        ["@install", "docker", "docker-compose"],
+        ["@enable", "docker"]
+    ]
+
+[tasks.cli-utils]
+    cmds = [
+        ["@pip-install",
+            "black",
+            "pipenv",
+            "pytest",
+            "httpie",
+            "youtube-dl",
+        ], 
+        ["@go-install",
+            "github.com/ericchiang/pup",
+        ],
+    ]
+
+[tasks.i3]
+    cmds = [["@install",
+        "i3-gaps",
+        "i3blocks",
+        "i3lock",
+        "i3status",
+    ]]
+    links = [
+        [".config/i3/config", "i3/config"],
+        [".config/i3/lock.sh", "i3/lock.sh"],        
+    ]
+
+[tasks.gui]
+    cmds = [["@install",
+        "okular",
+        "kitty",
+        "networkmanager",
+        "network-manager-applet",
+        "rofi",
+        "rofi-greenclip",
+        "unclutter",
+        "scrot",
+        "spotify",
+        "visual-studio-code-bin",
+        "vivaldi",
+        "vivaldi-codecs-ffmpeg-extra-bin",
+        "xclip",
+        "zathura",
+        "zathura-pdf-mupdf",
+    ]]
+    links = [
+        [".config/zathura/zathurarc", "config/zathura/zathurarc"],
+        [".config/kitty/kitty.conf", "config/kitty/kitty.conf"],
+        [".config/rofi/config.rasi", "config/rofi/config.rasi"],
+        [".local/share/rofi/nord.rasi", "config/rofi/nord.rasi"],
+    ]
+
+[tasks.latex]
+    cmds = [["@install", "texlive-most"]]
+
+[tasks.python]
+    rejects = [["which", "python"]]
+    cmds = [["@install", "python", "python-pip", "pyenv"]]
+
+[tasks.dotnet]
+    rejects = [["which", "dotnet"]]
+    cmds = [
+        ["@install", "dotnet-sdk", "dotnet-runtime", "dotnet-host", "mono"],
+        ["@dotnet-install", "dotnet-fsharplint"],
+        ["@dotnet-install", "fake-cli"],
+        ["@dotnet-install", "fantomas-tool"],
+    ]
+    
+
+[tasks.yay]
+    rejects = [["which", "yay"]]
+    cmds = [["sudo", "pacman", "-Syu", "yay"]]
+
+[tasks.git]
+    cmds = [["@install", "git"]]
+    links = [
+        [".gitignore", "config/gitignore"],
+        [".gitconfig", "config/gitconfig"],
+    ]
+
+[tasks.golang]
+    rejects = [["which", "go"]]
+    envs = [["GOPATH", "${HM_DEST}/.go"]]
+    cmds = [["mkdir", "-p", "$GOPATH"], ["@install", "go"]]
+
+[tasks.node]
+    rejects = [["which", "n"]]
+    envs = [["N_PREFIX", "${HM_DEST}/.n"]]
+    cmds = [["${HM_SRC}/bin/n-install.sh", "-y"]]
+
+# macros
+
+[macros.install]
+    deps = ["yay"]
+    prefix = ["yay", "-Sy", "--noconfirm", "--needed"]
+
+[macros.go-install]
+    deps = ["golang"]
+    prefix = ["go", "get"]
+
+[macros.npm-install]
+    deps = ["node"]
+    prefix = ["sudo", "npm", "install", "-g"]
+
+[macros.dotnet-install]
+    deps = ["dotnet"]
+    prefix = ["dotnet", "tool", "install", "-g"]
+
+[macros.pip-install]
+    deps = ["python"]
+    prefix = ["python", "-m", "pip", "install", "--user"]
+
+[macros.enable]
+    prefix = ["systemctl", "enable"]
