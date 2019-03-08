@@ -3,11 +3,11 @@
 //----------------------
 
 configuration {
-	modi: 						"drun,run";
-	width: 						750;
-	lines: 						13;
-	show-match: 			false;
-	separator-style: 	"solid";
-	hide-scrollbar: 	true;
-	theme:						"nord.rasi";
-	}
+	modi: "drun,run,window";
+	width: 750;
+	lines: 13;
+	show-match: false;
+	separator-style: "solid";
+	hide-scrollbar: true;
+	theme: "nord.rasi";
+}

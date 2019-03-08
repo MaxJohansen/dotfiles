@@ -1,5 +1,6 @@
 # quick aliases
 alias gst "git status"
+alias icat "kitty +kitten icat"
 alias .. "cd .."
 alias ... "cd ../.."
 alias .... "cd ../../.."
@@ -10,6 +11,8 @@ set -gx LC_ALL en_US.UTF-8
 set -gx LANG en_US.UTF-8
 set -gx LANGUAGE en_US.UTF-8
 
+set -gx BROWSER vivaldi-stable
+
 # editors and pager options
 set -gx VISUAL code
 set -gx EDITOR $VISUAL
@@ -18,6 +21,9 @@ set -gx BAT_THEME TwoDark
 set -gx SSH_KEY_PATH $HOME/.ssh/rsa_id
 set -gx N_PREFIX $HOME/.n
 set -gx GOPATH $HOME/.go
+
+# Parallel make, use all available cores
+set -gx MAKEFLAGS -j(nproc)
 
 # Less flags:
 #  F - Quit if one screen

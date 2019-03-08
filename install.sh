@@ -15,6 +15,7 @@ script_directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 echo $script_directory
 
 task=${1:-"default"}
+
 homemaker="homemaker/homemaker_linux_x86_64"
 
 if [ "$task" == "gitconfig" ]; then

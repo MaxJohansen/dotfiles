@@ -9,6 +9,8 @@ The current setup uses [Homemaker](https://foosoft.net/projects/homemaker/) to b
 
 ## Arch Linux
 
+Uses [yay](https://github.com/Jguer/yay) as a package manager for AUR.
+
 Installs the following packages
 * [bat](https://github.com/sharkdp/bat) - A better `cat`
 * [jq](https://github.com/stedolan/jq) - For munging JSON data
@@ -22,11 +24,13 @@ The dotfiles attempt to style everything with the [Nord](https://arcticicestudio
 * [vivaldi](https://vivaldi.com) - Browser 🎨
 * [code](https://code.visualstudio.com/) - Editor 🎨
 * [zathura](https://github.com/pwmt/zathura) - A simple document viewer (primarily PDF and ps) [🎨](config/zathurarc)
+* [okular](https://okular.kde.org/) - Heavier document viewer, handy for filling out PDF forms
 * [kitty](https://sw.kovidgoyal.net/kitty/) - An amazing terminal emulator [🎨](config/kitty.conf)
 * [spotify](https://spotify.com) - Gotta get my jams on
 * [rofi](https://github.com/DaveDavenport/rofi) - Launcher, menu and window switcher [🎨](config/rofi)
 * [rofi-greenclip](https://github.com/erebe/greenclip) - Clipboard manager that integrates with rofi
 * [autorandr](https://github.com/phillipberndt/autorandr) - Automatically configures screen layouts
+* [maim](https://github.com/naelstrof/maim) - Like scrot but better
 * [gloom](https://github.com/shizy/gloom) - Hides cursor, dims monitor after a while, locks screen automatically
 
 ## Windows Subsystem for Linux

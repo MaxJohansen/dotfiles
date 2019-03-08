@@ -11,7 +11,7 @@
 # general
 
 [tasks.fish]
-    rejects = [["which", "fish"]]
+    rejects = [["sh", "-c", "[[ $SHELL =~ \"fish\" ]]" ]]
     cmds = [["@install", "fish"], ["chsh", "-s", "/usr/bin/fish"]]
     links = [
         [".config/fish/config.fish", "fish/config.fish"],
@@ -63,7 +63,7 @@
             "pytest",
             "httpie",
             "youtube-dl",
-        ], 
+        ],
         ["@go-install",
             "github.com/ericchiang/pup",
         ],
@@ -75,10 +75,12 @@
         "i3blocks",
         "i3lock",
         "i3status",
+        "sxhkd"
     ]]
     links = [
         [".config/i3/config", "i3/config"],
-        [".config/i3/lock.sh", "i3/lock.sh"],        
+        [".config/i3/lock.sh", "i3/lock.sh"],
+        [".config/sxhkd/sxhkdrc", "config/sxhkd/sxhkdrc"]
     ]
 
 [tasks.gui]
@@ -103,25 +105,23 @@
         [".config/zathura/zathurarc", "config/zathura/zathurarc"],
         [".config/kitty/kitty.conf", "config/kitty/kitty.conf"],
         [".config/rofi/config.rasi", "config/rofi/config.rasi"],
-        [".local/share/rofi/nord.rasi", "config/rofi/nord.rasi"],
+        [".config/rofi/nord.rasi", "config/rofi/nord.rasi"],
     ]
 
 [tasks.latex]
     cmds = [["@install", "texlive-most"]]
 
 [tasks.python]
-    rejects = [["which", "python"]]
     cmds = [["@install", "python", "python-pip", "pyenv"]]
 
 [tasks.dotnet]
-    rejects = [["which", "dotnet"]]
     cmds = [
         ["@install", "dotnet-sdk", "dotnet-runtime", "dotnet-host", "mono"],
         ["@dotnet-install", "dotnet-fsharplint"],
         ["@dotnet-install", "fake-cli"],
         ["@dotnet-install", "fantomas-tool"],
     ]
-    
+
 
 [tasks.yay]
     rejects = [["which", "yay"]]
@@ -135,7 +135,6 @@
     ]
 
 [tasks.golang]
-    rejects = [["which", "go"]]
     envs = [["GOPATH", "${HM_DEST}/.go"]]
     cmds = [["mkdir", "-p", "$GOPATH"], ["@install", "go"]]
 

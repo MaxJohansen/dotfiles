@@ -1,4 +1,3 @@
-set font			        "Fira Code Retina"
 set default-fg 			    "#d8dee9"
 set default-bg 			    "#2e3440"
 
@@ -13,6 +12,11 @@ set statusbar-fg		    "#d8dee9"
 set statusbar-bg		    "#4c566a"
 set statusbar-h-padding		10
 set statusbar-v-padding		10
+
+set tabbar-fg			    "#d8dee9"
+set tabbar-bg			    "#4c566a"
+set tabbar-focus-fg		    "#3b4252"
+set tabbar-focus-bg		    "#88c0d0"
 
 set notification-bg		    "#2e3440"
 set notification-fg		    "#d8dee9"
