@@ -12,8 +12,8 @@ set $browser --no-startup-id vivaldi-stable
 floating_modifier $mod
 
 # #---Starting External Scripts---# #
-# Setting the background:
-exec_always --no-startup-id feh --bg-scale --randomize ~/.config/wallpapers/
+# Start sxhkd for keyboard shortcuts
+exec_always --no-startup-id sxhkd
 # Starts dunst for notifications:
 exec --no-startup-id dunst
 # Clipboard history:
@@ -24,10 +24,10 @@ exec --no-startup-id unclutter
 exec --no-startup-id nm-applet
 
 bar {
-	font xft:Fira Code 16
-	status_command i3blocks
-	strip_workspace_numbers yes
-	position bottom
+    font xft:Fira Code 16
+    status_command i3blocks
+    strip_workspace_numbers yes
+    position bottom
 }
 
 # Run the script to update the mpd i3block on change.
@@ -40,55 +40,13 @@ set $netrefresh --no-startup-id sudo systemctl restart NetworkManager
 set $hibernate sudo systemctl suspend
 
 # #---Basic Bindings---# #
-bindsym $mod+Return 		exec $term
-bindsym $mod+Shift+Return 	exec $term
-
-bindsym $mod+Shift+space 	floating toggle
-bindsym $mod+space		focus mode_toggle
-
-bindsym $mod+Escape		workspace prev
-bindsym $mod+Shift+Escape 	exec prompt "Are you sure you want to leave i3?" "i3-msg exit"
-
-bindsym $mod+BackSpace  kill
-bindsym $mod+Shift+BackSpace	exec prompt "Are you sure you want to reboot?" "$reboot"
-
-##bindsym $mod+grave
-##bindsym $mod+asciitilde
-
 # #---Letter Key Bindings---# #
 bindsym $mod+q			kill
-bindsym $mod+Shift+q		kill
-
-bindsym $mod+l			exec --no-startup-id $browser
-
-bindsym $mod+j 			exec $term -e ranger
-bindsym $mod+Shift+j		exec $term -e sudo ranger /
 
 bindsym $mod+t			split toggle
-bindsym $mod+y			exec $term -e calcurse
-bindsym $mod+i 			exec $term -e htop
-
 bindsym $mod+o			sticky toggle
 
-bindsym $mod+c			gaps inner current plus 5
-bindsym $mod+shift+c		gaps inner current minus 5
-
-bindsym $mod+e			exec --no-startup-id rofi -show run
-
 bindsym $mod+f			fullscreen toggle
-
-bindsym $mod+Control+Left	workspace prev
-bindsym $mod+Control+Right	workspace next
-
-bindsym $mod+Shift+g		exec --no-startup-id gimp; workspace $ws6
-
-bindsym $mod+z			gaps outer current plus 5
-bindsym $mod+Shift+z		gaps outer current minus 5
-
-bindsym $mod+x			exec --no-startup-id ~/.config/i3/lock.sh
-bindsym $mod+Shift+x		exec prompt "Are you sure you want to shutdown?" "$shutdown"
-
-bindsym $mod+oslash			exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
 
 bindsym $mod+b			bar mode toggle
 bindsym $mod+Shift+b		floating toggle; sticky toggle; exec --no-startup-id bottomleft
@@ -122,10 +80,6 @@ bindsym $mod+r mode "resize"
 
 # #---Workspace Bindings---# #
 bindsym $mod+Tab		workspace back_and_forth
-bindsym $mod+XF86Back		workspace prev
-bindsym $mod+XF86Forward	workspace next
-bindsym $mod+Shift+slash	kill
-bindsym $mod+backslash		workspace back_and_forth
 
 set $ws1 "1:"
 set $ws2 "2:"
@@ -167,13 +121,14 @@ workspace $ws2 gaps inner 0
 workspace $ws2 gaps outer 0
 workspace $ws3 gaps inner 0
 workspace $ws3 gaps outer 0
-
 workspace $ws6 gaps inner 0
 workspace $ws6 gaps outer 0
+
 assign [class="Code"] $ws2
 assign [class="Vivaldi-stable"] $ws3
 assign [class="Slack"] $ws4
 assign [class="Spotify"] $ws5
+
 for_window [class="Spotify"] move to workspace $ws5
 for_window [title="GIMP Startup"] move to workspace $ws6
 for_window [class="Gimp"] move to workspace $ws6
@@ -183,51 +138,3 @@ for_window [window_role="GtkFileChooserDialog"] resize shrink height 10 px
 
 for_window [title="Default - Wine desktop"] floating enable
 
-# #---Function Buttons---# #
-bindsym $mod+F2		restart
-
-
-# #---Arrow Keys---# #
-bindsym $mod+Left		focus left
-bindsym $mod+Down		focus down
-bindsym $mod+Up			focus up
-bindsym $mod+Right 		focus right
-bindsym $mod+Shift+Left		move left
-bindsym $mod+Shift+Down		move down
-bindsym $mod+Shift+Up		move up
-bindsym $mod+Shift+Right 	move right
-
-# #---Media Keys---# #
-
-# For screenshots and recording
-bindsym Print 			exec --no-startup-id scrot
-bindsym Shift+Print 		exec --no-startup-id scrot -u
-
-# #---Extra XF86 Keys---# #
-# These are the extra media keys that some keyboards have.
-bindsym XF86AudioMute		exec pulseaudio-ctl mute
-bindsym XF86AudioLowerVolume	exec pulseaudio-ctl down 5
-bindsym XF86AudioRaiseVolume	exec pulseaudio-ctl up 5
-bindsym XF86PowerOff		exec prompt "Are you sure you want to shutdown?" "$shutdown"
-bindsym XF86Calculator		exec $term -e R -q
-bindsym XF86Sleep		exec sudo zzz
-bindsym XF86Explorer		exec $term -e ranger
-bindsym XF86WWW			exec --no-startup-id $browser
-bindsym XF86ScreenSaver		exec exec --no-startup-id ~/.config/i3/lock.sh
-bindsym XF86MyComputer		exec $term -e ranger
-bindsym XF86Eject		exec sudo umount -R /mnt
-bindsym XF86AudioNext		exec pulseaudio-ctl next
-bindsym XF86AudioPlay		exec pulseaudio-ctl toggle
-bindsym XF86AudioPrev		exec pulseaudio-ctl prev
-bindsym XF86AudioStop		exec pulseaudio-ctl toggle
-bindsym XF86AudioRewind		exec pulseaudio-ctl back 10
-bindsym XF86AudioForward	exec pulseaudio-ctl forward 10
-bindsym XF86Reload		restart
-bindsym XF86Suspend		exec --no-startup-id ~/.config/i3/lock.sh
-bindsym XF86Close		kill
-bindsym XF86Search		exec $browser https://duckduckgo.com
-bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 15
-bindsym XF86MonBrightnessUp	exec --no-startup-id xbacklight -inc 15
-bindsym XF86Display		exec --no-startup-id arandr
-bindsym XF86Documents		exec $term -e ranger ~/Documents
-bindsym XF86WLAN		exec $netrefresh
