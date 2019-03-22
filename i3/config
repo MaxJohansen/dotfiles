@@ -3,7 +3,7 @@
 for_window [class="^.*"] border pixel 2
 gaps inner 15
 gaps outer 15
-font pango:Fira Code 14
+font pango:FuraCode Nerd Font 14
 set $mod Mod4
 set $term --no-startup-id kitty
 set $browser --no-startup-id vivaldi-stable
@@ -24,7 +24,7 @@ exec --no-startup-id unclutter
 exec --no-startup-id nm-applet
 
 bar {
-    font xft:Fira Code 16
+    font xft:FuraCode Nerd Font 16
     status_command i3blocks
     strip_workspace_numbers yes
     position bottom
