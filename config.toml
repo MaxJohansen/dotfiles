@@ -87,7 +87,13 @@
         [".config/sxhkd/sxhkdrc", "config/sxhkd/sxhkdrc"]
     ]
 
+[tasks.fonts]
+    links = [
+        [".local/share/fonts", "fonts"]
+    ]
+
 [tasks.gui]
+    deps = ["fonts"]
     cmds = [["@install",
         "okular",
         "kitty",
