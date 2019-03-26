@@ -76,13 +76,13 @@
 [tasks.i3]
     cmds = [["@install",
         "i3-gaps",
-        "i3lock",
+        "i3lock-color",
         "polybar",
         "sxhkd"
     ]]
     links = [
-        [".config/i3/config", "i3/config"],
-        [".config/i3/lock.sh", "i3/lock.sh"],
+        [".config/i3/config", "config/i3/config"],
+        [".config/i3/lock.sh", "config/i3/lock.sh"],
         [".config/polybar/config", "config/polybar/config"],
         [".config/sxhkd/sxhkdrc", "config/sxhkd/sxhkdrc"]
     ]
