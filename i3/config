@@ -14,6 +14,8 @@ floating_modifier $mod
 # #---Starting External Scripts---# #
 # Start sxhkd for keyboard shortcuts
 exec_always --no-startup-id sxhkd
+# Use Nord polybar for all monitors
+exec --no-startup-id polybar nord
 # Starts dunst for notifications:
 exec --no-startup-id dunst
 # Clipboard history:
@@ -22,13 +24,6 @@ exec --no-startup-id greenclip daemon
 exec --no-startup-id unclutter
 # Network Manager applet
 exec --no-startup-id nm-applet
-
-bar {
-    font xft:FuraCode Nerd Font 16
-    status_command i3blocks
-    strip_workspace_numbers yes
-    position bottom
-}
 
 # Run the script to update the mpd i3block on change.
 # exec --no-startup-id i3mpdupdate
@@ -48,7 +43,6 @@ bindsym $mod+o			sticky toggle
 
 bindsym $mod+f			fullscreen toggle
 
-bindsym $mod+b			bar mode toggle
 bindsym $mod+Shift+b		floating toggle; sticky toggle; exec --no-startup-id bottomleft
 
 # resize window (you can also use the mouse for that)
