@@ -15,7 +15,7 @@ floating_modifier $mod
 # Start sxhkd for keyboard shortcuts
 exec_always --no-startup-id sxhkd
 # Use Nord polybar for all monitors
-exec --no-startup-id polybar nord
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # Starts dunst for notifications:
 exec --no-startup-id dunst
 # Clipboard history:
@@ -25,9 +25,6 @@ exec --no-startup-id unclutter
 # Network Manager applet
 exec --no-startup-id nm-applet
 
-# Run the script to update the mpd i3block on change.
-# exec --no-startup-id i3mpdupdate
-
 #SYSTEMD
 set $shutdown sudo shutdown -h now
 set $reboot sudo reboot
@@ -36,14 +33,13 @@ set $hibernate sudo systemctl suspend
 
 # #---Basic Bindings---# #
 # #---Letter Key Bindings---# #
-bindsym $mod+q			kill
+bindsym $mod+q kill
 
-bindsym $mod+t			split toggle
-bindsym $mod+o			sticky toggle
+bindsym $mod+t split toggle
+bindsym $mod+o sticky toggle
+bindsym $mod+g floating toggle
 
-bindsym $mod+f			fullscreen toggle
-
-bindsym $mod+Shift+b		floating toggle; sticky toggle; exec --no-startup-id bottomleft
+bindsym $mod+f fullscreen toggle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -75,16 +71,20 @@ bindsym $mod+r mode "resize"
 # #---Workspace Bindings---# #
 bindsym $mod+Tab		workspace back_and_forth
 
-set $ws1 "1:"
-set $ws2 "2:"
-set $ws3 "3:"
-set $ws4 "4:"
-set $ws5 "5:"
+set $ws1 "1:terminal"
+set $ws2 "2:code"
+set $ws3 "3:browser"
+set $ws4 "4:spotify"
+set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+
+assign [class="Code"] $ws2
+assign [class="Vivaldi-stable"] $ws3
+assign [class="Spotify"] $ws4
 
 # switch to workspace
 bindsym $mod+1		workspace $ws1
@@ -109,26 +109,3 @@ bindsym $mod+Shift+7	move container to workspace $ws7
 bindsym $mod+Shift+8	move container to workspace $ws8
 bindsym $mod+Shift+9	move container to workspace $ws9
 bindsym $mod+Shift+0	move container to workspace $ws10
-
-# Browser workspace doesn't need any gaps
-workspace $ws2 gaps inner 0
-workspace $ws2 gaps outer 0
-workspace $ws3 gaps inner 0
-workspace $ws3 gaps outer 0
-workspace $ws6 gaps inner 0
-workspace $ws6 gaps outer 0
-
-assign [class="Code"] $ws2
-assign [class="Vivaldi-stable"] $ws3
-assign [class="Slack"] $ws4
-assign [class="Spotify"] $ws5
-
-for_window [class="Spotify"] move to workspace $ws5
-for_window [title="GIMP Startup"] move to workspace $ws6
-for_window [class="Gimp"] move to workspace $ws6
-for_window [window_role="gimp-dock"] floating disable; move left; resize shrink width 50 px or 50ppt
-for_window [window_role="gimp-toolbox"] floating disable; move right; resize grow width 30 px or 30ppt
-for_window [window_role="GtkFileChooserDialog"] resize shrink height 10 px
-
-for_window [title="Default - Wine desktop"] floating enable
-

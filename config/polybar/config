@@ -1,7 +1,3 @@
-;---------------------------------------
-;		COLORS
-;---------------------------------------
-
 [colors]
 nord0 = #2E3440
 nord1 = #3B4252
@@ -20,133 +16,61 @@ nord13 = #EBCB8B
 nord14 = #A3BE8C
 nord15 = #B48EAD
 
-;---------------------------------------
-;		GLOBAL
-;---------------------------------------
-
-[settings]
-throttle-output = 5
-throttle-output-for = 10
-throttle-input-for = 30
-screenchange-reload = true
-bargap = 10
-barwidth = 100%
-barheight = 48
-
 [bar/nord]
-bottom = true
-monitor = ${env:MONITOR:eDP1}
 monitor-strict = true
 fixed-center = true
+override-redirect = true
+wm-restack = i3
 dpi = 96
-
-offset-x = 10
-offset-y = 1%
-
-border-size = 2
-border-color = ${colors.nord10}
 
 background = ${colors.nord3}
 foreground = ${colors.nord5}
 
+border-size = 1
+border-color = ${colors.nord10}
+
 tray-position = right
-tray-offset-x = -10
-tray-offset-y = 10
 tray-detached = false
-
-
-;---------------------------------------
-;		FONTS
-;---------------------------------------
 
 font-0 = FuraCode Nerd Font:size=10;3
 
-;---------------------------------------
-;	     MODULES LAYOUT
-;---------------------------------------
-
-modules-left = i3 RightArrow1 xwindow RightArrow2
+; MODULES LAYOUT
+modules-left = i3
+modules-center = xwindow
 modules-right = date LeftArrow volume xbacklight battery
 
-;---------------------------------------
-;	      i3 MODULE
-;---------------------------------------
 [module/i3]
 type = internal/i3
-
-; This will split the workspace name on ':'
-; Default: false
 strip-wsnumbers = true
-
-; Sort the workspaces by index instead of the default
-; sorting that groups the workspaces by output
-; Default: false
 index-sort = true
-
-; Use fuzzy (partial) matching on labels when assigning 
-; icons to workspaces
-; Example: code;♚ will apply the icon to all workspaces 
-; containing 'code' in the label
-; Default: false
 fuzzy-match = true
 
 format = <label-state>
 
-label-focused-occupied = 
-label-focused-occupied-foreground = ${colors.nord6}
-label-focused-occupied-background = ${colors.nord8}
-label-focused-occupied-padding = 1
+ws-icon-0 = "terminal;"
+ws-icon-1 = "code;"
+ws-icon-2 = "browser;"
+ws-icon-3 = "spotify;"
+ws-icon-default = ""
 
-label-focused-urgent = 
-label-focused-urgent-foreground = ${colors.nord11}
-label-focused-urgent-background = ${colors.nord8}
-label-focused-urgent-padding = 1
+label-focused = %icon%
+label-focused-foreground = ${colors.nord1}
+label-focused-background = ${colors.nord10}
+label-focused-padding = 1
 
-label-focused-empty = 
-label-focused-empty-foreground = ${colors.nord6}
-label-focused-empty-background = ${colors.nord8}
-label-focused-empty-padding = 1
-
-label-occupied = 
-label-occupied-foreground = ${colors.nord1}
-label-occupied-background = ${colors.nord8}
-label-occupied-padding = 1
+label-unfocused = %icon%
+label-unfocused-padding = 1
 
 label-urgent = 
 label-urgent-foreground = ${colors.nord13}
-label-urgent-background = ${colors.nord8}
+label-urgent-background = ${colors.nord10}
 label-urgent-padding = 1
-
-label-empty = 
-label-empty-foreground = ${colors.nord1}
-label-empty-background = ${colors.nord8}
-label-empty-padding = 1
-
-;---------------------------------------
-;	      TEXT MODULES
-;---------------------------------------
-
-[module/RightArrow1]
-type = custom/text
-content = " "
-content-foreground = ${colors.nord8}
-content-background = ${colors.nord1}
-
-[module/RightArrow2]
-type = custom/text
-content = ""
-content-foreground = ${colors.nord1}
-content-background = ${colors.nord3}
 
 [module/LeftArrow]
 type = custom/text
 content = ""
 content-foreground = ${colors.nord1}
 content-background = ${colors.nord3}
-
-;---------------------------------------
-;	   XWINDOW MODULE
-;---------------------------------------
 
 [module/xwindow]
 type = internal/xwindow
@@ -156,11 +80,7 @@ format-background = ${colors.nord1}
 format-padding = 1
 
 label =  %title%
-label-maxlen = 40
-
-;---------------------------------------
-;	   XBACKLIGHT MODULE
-;---------------------------------------
+label-maxlen = 50
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -171,28 +91,17 @@ format-background = ${colors.nord1}
 
 label = " %percentage%"
 
-;---------------------------------------
-;	   DATE MODULE
-;---------------------------------------
-
 [module/date]
 type = internal/date
 
 interval = 60
-
 date = %a %d
-
 time = %H:%M
-
 label =   %date%   %time%
 
 format-foreground = ${colors.nord5}
 format-background = ${colors.nord3}
 format-padding = 1
-
-;---------------------------------------
-;	   VOLUME MODULE
-;---------------------------------------
 
 [module/volume]
 type = internal/pulseaudio
@@ -225,10 +134,6 @@ ramp-volume-2-background = ${colors.nord1}
 ramp-volume-3 = "  "
 ramp-volume-3-foreground = ${colors.nord5}
 ramp-volume-3-background = ${colors.nord1}
-
-;---------------------------------------
-;	   BATTERY MODULE
-;---------------------------------------
 
 [module/battery]
 type = internal/battery

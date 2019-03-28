@@ -84,6 +84,7 @@
         [".config/i3/config", "config/i3/config"],
         [".config/i3/lock.sh", "config/i3/lock.sh"],
         [".config/polybar/config", "config/polybar/config"],
+        [".config/polybar/launch.sh", "config/polybar/launch.sh"],
         [".config/sxhkd/sxhkdrc", "config/sxhkd/sxhkdrc"]
     ]
 
