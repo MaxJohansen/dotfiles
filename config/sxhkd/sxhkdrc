@@ -1,17 +1,17 @@
-1# Terminal emulator
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# Terminal emulator
 super + Return
 	kitty
 
 # Browser
 super + l
-    vivaldi-stable
+	vivaldi-stable
 
-# make sxhkd reload its configuration files:
-super + Escape
-	pkill -USR1 -x sxhkd
-
-super + {Print,Insert,Delete}
-    {flameshot gui,kmag,gpick -pso --no-newline | xclip -i -selection c}
+super + Print
+	{flameshot gui | clip}
 
 super + i
 	kitty -e htop
@@ -20,7 +20,7 @@ super + e
 	rofi -show run
 
 super + x
-	~/config/i3/lock.sh
+	$HOME/.config/i3/lock.sh
 
 super + oslash
 	rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
