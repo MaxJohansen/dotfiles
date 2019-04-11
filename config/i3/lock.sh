@@ -31,7 +31,7 @@ i3lock -f -e                    \
     --datecolor=d8dee9ff        \
     --datestr="%A, %d %B"       \
     --datesize=32               \
-    --datepos="tx:650"          \
+    --datepos="tx:450"          \
     \
     --veriftext="Verifying..."  \
     --verifcolor=d8dee9ff       \
