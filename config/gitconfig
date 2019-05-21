@@ -18,8 +18,17 @@
 	ignoreall = !git status -s | grep -e ^?? | cut -c 4- >> .gitignore
 	fixup = !sh -c 'REV=$(git rev-parse $1) && git commit -n --fixup $@ && git rebase -i --autosquash $REV^' -
 	nuke = !git clean -fdx && git submodule foreach git clean -fdx
+	todo = "!sh -c ' \
+	[ $GIT_PREFIX ] && cd $GIT_PREFIX; \
+	git status --short --branch $*; \
+	git --no-pager diff -U0 master | \
+	grep \"^+.*TODO\" | \
+	sed \"s/^+//\" | \
+	git --no-pager grep -nFf - 2> /dev/null' -"
 [help]
 	autocorrect = 1
+[pull]
+	rebase = true
 [rebase]
 	autostash = true
 [merge]
