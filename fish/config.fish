@@ -40,6 +40,8 @@ set -a PATH $HOME/.cargo/bin
 set -a PATH $HOME/.dotnet/tools
 set -a PATH $N_PREFIX/bin
 set -a PATH $GOPATH/bin
+set -a PATH $HOME/.yarn/bin
+set -a PATH $HOME/.config/yarn/global/node_modules/.bin
 
 # dotnet root required for some dotnet tools
 set -gx DOTNET_ROOT /opt/dotnet/
