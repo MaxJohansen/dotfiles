@@ -25,6 +25,9 @@ set -gx GOPATH $HOME/.go
 # Parallel make, use all available cores
 set -gx MAKEFLAGS -j(nproc)
 
+# Don't feel like I need those bytecode files
+set -gx PYTHONDONTWRITEBYTECODE please
+
 # Less flags:
 #  F - Quit if one screen
 #  R - Raw control chars (for color)
