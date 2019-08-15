@@ -16,7 +16,7 @@ set -gx BROWSER vivaldi-stable
 # editors and pager options
 set -gx VISUAL code
 set -gx EDITOR $VISUAL
-set -gx PAGER bat
+set -gx PAGER less
 set -gx BAT_THEME TwoDark
 set -gx SSH_KEY_PATH $HOME/.ssh/rsa_id
 set -gx N_PREFIX $HOME/.n

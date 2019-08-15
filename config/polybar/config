@@ -17,7 +17,7 @@ nord14 = #A3BE8C
 nord15 = #B48EAD
 
 [bar/nord]
-monitor = ${env:MONITOR:DVI-I-1}
+monitor = ${env:MONITOR:eDP1}
 monitor-strict = true
 fixed-center = true
 override-redirect = true
