@@ -156,6 +156,18 @@
     envs = [["N_PREFIX", "${HM_DEST}/.n"]]
     cmds = [["${HM_SRC}/bin/n-install.sh", "-y"]]
 
+[tasks.vscode-config]
+    deps = ["node"]
+    cmds = [["npm", "install", "--prefix", "${HM_DEST}/.config/Code/User", "vscode-use-package", "--no-save"]]
+    links = [
+        [".config/Code/User/init.ts", "config/Code/init.ts"],
+        [".config/Code/User/c.ts", "config/Code/c.ts"],
+        [".config/Code/User/fsharp.ts", "config/Code/fsharp.ts"],
+        [".config/Code/User/python.ts", "config/Code/python.ts"],
+        [".config/Code/User/rust.ts", "config/Code/rust.ts"],
+        [".config/Code/User/webdev.ts", "config/Code/webdev.ts"]
+    ]
+
 # macros
 
 [macros.install]
