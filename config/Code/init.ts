@@ -19,9 +19,7 @@ export function init(context: import("vscode").ExtensionContext) {
     renderIndentGuides: false,
     selectionHighlight: true,
     formatOnSave: true,
-    formatOnPaste: true,
-    formatOnType: true,
-    quickSuggestions: { other: false, comments: false, strings: false },
+    quickSuggestions: { comments: false, strings: false },
     suggestSelection: "recentlyUsedByPrefix",
     "suggest.shareSuggestSelections": true,
     "suggest.localityBonus": true,
@@ -57,6 +55,8 @@ export function init(context: import("vscode").ExtensionContext) {
   });
 
   usePackage("pkief.material-icon-theme", {
+    scope: "material-icon-theme",
+    config: { showWelcomeMessage: false },
     init: () => configSet("workbench", { iconTheme: "material-icon-theme" }),
   });
 
@@ -90,6 +90,8 @@ export function init(context: import("vscode").ExtensionContext) {
       sort: "byLocation",
     },
   });
+
+  usePackage("james-yu.latex-workshop");
 
   c.init();
   rust.init();
