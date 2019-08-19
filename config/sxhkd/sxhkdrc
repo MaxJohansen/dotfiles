@@ -11,7 +11,7 @@ super + l
 	vivaldi-stable
 
 super + Print
-	{flameshot gui | clip}
+	flameshot gui
 
 super + i
 	kitty -e htop
