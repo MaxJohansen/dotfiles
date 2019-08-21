@@ -18,6 +18,7 @@
 	ignoreall = !git status -s | grep -e ^?? | cut -c 4- >> .gitignore
 	fixup = !sh -c 'REV=$(git rev-parse $1) && git commit -n --fixup $@ && git rebase -i --autosquash $REV^' -
 	nuke = !git clean -fdx && git submodule foreach git clean -fdx
+	rollback = !sh -c 'git reset --merge HEAD~${1-1}' -
 	todo = "!sh -c ' \
 	[ $GIT_PREFIX ] && cd $GIT_PREFIX; \
 	git status --short --branch $*; \
@@ -31,7 +32,16 @@
 	rebase = true
 [rebase]
 	autostash = true
+# See https://www.git-scm.com/book/en/v2/Git-Tools-Rerere
+[rerere]
+	enabled = true
 [merge]
 	conflictstyle = diff3
 [url "git@github.com:"]
 	insteadOf = "hub:"
+# ignored by Git older than 1.8.2
+[diff]
+	algorithm = histogram
+	# Added in Git 2.9.0 (experimental): more readable diffs.
+	compactionHeuristic = true
+
