@@ -3,7 +3,7 @@
 function bind_bang
   switch (commandline -t)
   case "!"
-    commandline -j $history[1]
+    commandline -t $history[1]; commandline -f repaint
   case "*"
     commandline -i !
   end
@@ -11,5 +11,4 @@ end
 
 function fish_user_key_bindings
   bind ! bind_bang
-  bind \cs pet-select
 end
