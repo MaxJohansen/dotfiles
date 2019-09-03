@@ -1,14 +1,17 @@
 #!/bin/bash
 
+# Make a temp file
+FILENAME=$(mktemp -t screenXXX.jpg)
+
 # Take a screenshot:
-scrot /tmp/screen.png
+scrot -o $FILENAME
 
 # Create a blur on the shot:
-convert /tmp/screen.png -scale 10% -scale 1000% /tmp/screen.png
+convert $FILENAME -scale 10% -scale 1000% $FILENAME
 
 # Lock it up!
 i3lock -f -e                    \
-    --image=/tmp/screen.png     \
+    --image=$FILENAME           \
     --linecolor=00000000        \
     --keyhlcolor=88c0d0ff       \
     --bshlcolor=d8dee9ff        \
@@ -46,3 +49,5 @@ i3lock -f -e                    \
 
 # If still locked after 20 seconds, turn off screen.
 sleep 20 && pgrep i3lock && xset dpms force off
+
+rm -f $FILENAME
