@@ -71,9 +71,7 @@ label-urgent-padding = 1
 type = custom/script
 exec = uptime | awk -F, '{sub(".*up ",x,$1);print $1}'
 interval = 120
-label = Uptime: %output%
-format-prefix = "🖥 "
-format-prefix-foreground = ${colors.nord5}
+label = Uptime: %output%  
 
 [module/xwindow]
 type = internal/xwindow
